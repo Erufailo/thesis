@@ -31,5 +31,6 @@ public class Home extends Composite {
 		
 		
 		fp.add(label);
+		fp.addStyleName("mainContent");
 	}
 }

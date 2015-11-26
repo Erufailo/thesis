@@ -20,8 +20,8 @@ public class MyHistoryListener implements ValueChangeHandler<String> {
 		System.out.println("Current State : " + event.getValue());
 
 		if (event.getValue().equals("home")) {
-			RootPanel.get().clear();
-			RootPanel.get().add(Home.getInstance());
+			RootPanel.get("mainContent").clear();
+			RootPanel.get("mainContent").add(Home.getInstance());
 		}/*
 		if (event.getValue().equals("add")) {
 			RootPanel.get().clear();
