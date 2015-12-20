@@ -6,7 +6,19 @@
          xmlns="http://java.sun.com/xml/ns/javaee">
 
   <!-- Servlets -->
- 
+ <servlet>
+		<servlet-name>userServlet</servlet-name>
+		<servlet-class>edu.ptuxiaki.server.UserServerService</servlet-class>
+	</servlet>
+	
+
+	<!-- TODO: Add <servlet-mapping> tags for each <servlet> here. -->
+	
+	<servlet-mapping>
+		<servlet-name>userServlet</servlet-name>
+		
+		<url-pattern>/ptuxiaki_hotel2997/user</url-pattern>
+	</servlet-mapping>
   
   <!-- Default page to serve -->
   <welcome-file-list>

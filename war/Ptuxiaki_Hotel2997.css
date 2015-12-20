@@ -8,23 +8,29 @@
 	
 	margin-left: auto;
 	margin-right: auto;
-	width: 40%;
+	width: 30%;
+	background-color: #8ba5c8 
 	
 }
 .mainContent{
 	height:500px;
 	margin-left: auto;
 	margin-right: auto;
-	width: 75%;
+	width: 35%;
 	text-align:center;
+	background-color: #8ba5c8 
 }
 .footer{
 	margin-left: auto;
 	margin-right: auto;
 	width: 80%;
-	
+	background-color: #8ba5c8 
 }	
-	
+.myGrid{
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}	
 
 /** Example rules used by the template application (remove for your app) */
 h1 {
