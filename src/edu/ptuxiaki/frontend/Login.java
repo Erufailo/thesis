@@ -1,6 +1,10 @@
 package edu.ptuxiaki.frontend;
 
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -9,11 +13,14 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 
+import edu.ptuxiaki.client.UserService;
+import edu.ptuxiaki.client.UserServiceAsync;
+
 
 
 public class Login  extends Composite {
 	
-//	private static final UserServiceAsync userService = GWT.create(UserService.class);
+   private static final UserServiceAsync userService = GWT.create(UserService.class);
 
 	// instance of the class
 	static private Login _instance = null;
@@ -57,7 +64,27 @@ public class Login  extends Composite {
 
 		login = new Button("Login");
 	
-
+		login.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				userService.login(emailTxb.getText(), passwordTxb.getText(), new AsyncCallback<String>() {
+					
+					@Override
+					public void onSuccess(String result) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				
+			}
+		});
 		
 		
 

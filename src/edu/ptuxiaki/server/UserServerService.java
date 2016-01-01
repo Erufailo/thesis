@@ -34,6 +34,26 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
 				
 		
 	}
+	@Override
+	public String login(String email, String password) {
+		try {
+			String dbHash= db.login(email);
+			System.out.println(dbHash);
+			boolean valid = BCrypt.checkpw(password, dbHash);
+			
+			if(valid)
+				System.out.println("yes it is "+ email); //TODO SESSION COOKIE
+			else
+				System.out.println("paixtike malakia");
+				
+			
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
 
 }

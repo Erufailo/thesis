@@ -8,4 +8,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface UserService extends RemoteService{
 
 	public void register(String name, String surname,String email,String password, String tel);
+	
+	public String login(String email, String password);
 }

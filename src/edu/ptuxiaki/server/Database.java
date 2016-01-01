@@ -74,6 +74,46 @@ public class Database {
 		}
 
 	}
+	
+	/**
+	 * Finds a single user in the database given his email 
+	 * 
+	 * @param email
+	 * @param Password hash
+	 * @return the user name and surname as a String
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public String login(String email) throws ClassNotFoundException, SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+
+		try {
+			conn = getMySQLConnection();
+			String query = "SELECT * FROM users WHERE email =? ";
+			pstmt = (PreparedStatement) conn.prepareStatement(query);
+			pstmt.setString(1, email);
+			
+			result = pstmt.executeQuery();
+			if (result.next())
+				//return passhash for check
+				return (result.getString(5));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// close all the open connections
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return null;
+	}
+	
 	/**
 	 * Deletes a Person from the Database given his name and surname
 	 * 
@@ -108,44 +148,7 @@ public class Database {
 		}
 
 	}
-	/**
-	 * Finds a single user in the database given his name and surname
-	 * 
-	 * @param firstName
-	 * @param lastName
-	 * @return the user name and surname as a String
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 */
-	public String findUser(String firstName, String lastName) throws ClassNotFoundException, SQLException {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet result = null;
-
-		try {
-			conn = getMySQLConnection();
-			String query = "SELECT * FROM users WHERE FirstName =? AND LastName = ?";
-			pstmt = (PreparedStatement) conn.prepareStatement(query);
-			pstmt.setString(1, firstName);
-			pstmt.setString(2, lastName);
-
-			result = pstmt.executeQuery();
-			if (result.next())
-				return (result.getString(2) + " " + result.getString(3));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			// close all the open connections
-		} finally {
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		}
-		return firstName + " "+ lastName + " Not Found";
-	}
+	
 	/**
 	 * 
 	 * 
