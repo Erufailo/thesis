@@ -72,7 +72,8 @@ public class Login  extends Composite {
 					
 					@Override
 					public void onSuccess(String result) {
-						// TODO Auto-generated method stub
+						fp.remove(grid);
+						fp.add(new Label(result));
 						
 					}
 					

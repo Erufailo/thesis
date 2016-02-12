@@ -2,6 +2,9 @@ package edu.ptuxiaki.server;
 
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import edu.ptuxiaki.client.UserService;
@@ -41,11 +44,16 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
 			System.out.println(dbHash);
 			boolean valid = BCrypt.checkpw(password, dbHash);
 			
-			if(valid)
+			if(valid){
 				System.out.println("yes it is "+ email); //TODO SESSION COOKIE
-			else
+				// create session and store userid
+				HttpServletRequest request = this.getThreadLocalRequest();
+				HttpSession session = request.getSession(true);
+				session.setAttribute("UserID", 1);
+				return session.getId();
+			}else{
 				System.out.println("paixtike malakia");
-				
+			}	
 			
 			
 		} catch (ClassNotFoundException | SQLException e) {
