@@ -1,9 +1,12 @@
 package edu.ptuxiaki.frontend;
 
 
+import java.util.Date;
+
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -74,6 +77,10 @@ public class Login  extends Composite {
 					public void onSuccess(String result) {
 						fp.remove(grid);
 						fp.add(new Label(result));
+						String sessionID = result;
+                        final long DURATION = 1000 * 60 * 60 * 24 * 1;
+                        Date expires = new Date(System.currentTimeMillis() + DURATION);
+                        Cookies.setCookie("sid", sessionID, expires, null, "/", false);
 						
 					}
 					

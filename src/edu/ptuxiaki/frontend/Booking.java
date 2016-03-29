@@ -2,10 +2,15 @@ package edu.ptuxiaki.frontend;
 
 import java.util.Date;
 
+import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 //import com.google.appengine.repackaged.org.joda.time.format.DateTimeFormat;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -13,17 +18,20 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
+import edu.ptuxiaki.client.BookingService;
+import edu.ptuxiaki.client.BookingServiceAsync;
+
 public class Booking extends Composite {
 		
-	  // private static final UserServiceAsync userService = GWT.create(UserService.class);
+	   private static final BookingServiceAsync bookingService = GWT.create(BookingService.class);
 
 		// instance of the class
 		static private Booking _instance = null;
 		private FlowPanel fp = new FlowPanel();
 		//private Grid grid = new Grid(3, 2);
-		
-		
-		
+		private Button checkDates = new Button("Check Dates");
+		public String day1 ="";
+		public String day2 ="";
 
 		public Booking() {
 			initPage();
@@ -50,9 +58,9 @@ public class Booking extends Composite {
 				@Override
 				public void onValueChange(ValueChangeEvent<Date> event) {
 					Date date = event.getValue();
-					String dateString = DateTimeFormat.getFormat("dd/MM/yyyy").format(date);
+				    day1 = DateTimeFormat.getFormat("dd/MM/yyyy").format(date);
 				      
-				      text.setText(dateString);
+				      text.setText(day1);
 				      
 				      
 					
@@ -74,6 +82,7 @@ public class Booking extends Composite {
 				
 				@Override
 				public void onValueChange(ValueChangeEvent<Date> event) {
+					day2= dateBox.getTextBox().getText();
 					test.setText(dateBox.getTextBox().getText());
 					
 				}
@@ -82,6 +91,33 @@ public class Booking extends Composite {
 
 		      Label selectLabel = new Label("Permanent DatePicker:");
 		      Label selectLabel2 = new Label("DateBox with popup DatePicker:");
+		      
+		      
+		      checkDates.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					bookingService.checkDates(day1, day2, new AsyncCallback<String>() {
+						
+						@Override
+						public void onSuccess(String result) {
+							test.setText("day difrence = "+ result);
+							
+						}
+						
+						@Override
+						public void onFailure(Throwable caught) {
+							// TODO Auto-generated method stub
+							
+						}
+					});
+					
+				}
+			});
+		      
+		      
+		      
+		      
 		      // Add widgets to the root panel.
 		      VerticalPanel vPanel = new VerticalPanel();
 		      vPanel.setSpacing(10);
@@ -91,7 +127,7 @@ public class Booking extends Composite {
 		      vPanel.add(selectLabel2);
 		      vPanel.add(dateBox);	
 		      vPanel.add(test);
-			
+		      vPanel.add(checkDates);
 			
 			
 
