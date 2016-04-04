@@ -23,6 +23,7 @@ import edu.ptuxiaki.client.BookingServiceAsync;
 
 public class Booking extends Composite {
 		
+		
 	   private static final BookingServiceAsync bookingService = GWT.create(BookingService.class);
 
 		// instance of the class

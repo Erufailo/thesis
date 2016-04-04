@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 
+import edu.ptuxiaki.client.UserData;
 import edu.ptuxiaki.client.UserService;
 import edu.ptuxiaki.client.UserServiceAsync;
 
@@ -71,13 +72,16 @@ public class Login  extends Composite {
 			
 			@Override
 			public void onClick(ClickEvent event) {
-				userService.login(emailTxb.getText(), passwordTxb.getText(), new AsyncCallback<String>() {
+				userService.login(emailTxb.getText(), passwordTxb.getText(), new AsyncCallback<UserData>() {
 					
 					@Override
-					public void onSuccess(String result) {
+					public void onSuccess(UserData result) {
 						fp.remove(grid);
-						fp.add(new Label(result));
-						String sessionID = result;
+						fp.add(new Label(result.getEmail()));
+						fp.add(new Label(result.getToken()));
+						fp.add(new Label(result.getsID()));
+						//create cookie based on the session with server
+						String sessionID = result.getsID();
                         final long DURATION = 1000 * 60 * 60 * 24 * 1;
                         Date expires = new Date(System.currentTimeMillis() + DURATION);
                         Cookies.setCookie("sid", sessionID, expires, null, "/", false);

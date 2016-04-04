@@ -1,6 +1,7 @@
 package edu.ptuxiaki.client;
 
 
+
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
@@ -9,5 +10,9 @@ public interface UserService extends RemoteService{
 
 	public void register(String name, String surname,String email,String password, String tel);
 	
-	public String login(String email, String password);
+	public UserData login(String email, String password);
+	
+	public String changeRole();
+	
+	public UserData checkSessionWithServer(String sessionID, String token);
 }

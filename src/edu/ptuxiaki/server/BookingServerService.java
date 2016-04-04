@@ -25,7 +25,7 @@ public class BookingServerService extends RemoteServiceServlet implements Bookin
 			Date date1 = sdf.parse(day1);
 			Date date2 = sdf.parse(day2);
 			
-			
+			//calculate the days
 			int daysBetween = CalendarUtil.getDaysBetween(date1,date2);
 			System.out.println(sdf.format(date1));
 			System.out.println(sdf.format(date2));
