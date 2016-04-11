@@ -54,12 +54,11 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
 				UserData user = new UserData();
 				HttpServletRequest request = this.getThreadLocalRequest();
 				HttpSession session = request.getSession(true);
-				session.setAttribute("user", user);
 				UUID token = UUID.randomUUID();
 				user.setsID(session.getId());
 				user.setToken(token.toString());
 				user.setEmail(email);
-				
+				session.setAttribute("user", user);
 				
 				
 				return user;
@@ -88,8 +87,14 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
 	}
 	@Override
 	public UserData checkSessionWithServer(String sessionID, String token) {
-		// TODO Auto-generated method stub
-		return null;
+		UserData user=null;
+		HttpServletRequest request = this.getThreadLocalRequest();
+		HttpSession session = request.getSession(true);
+		user = (UserData)session.getAttribute("user");
+		
+		System.out.println("Server: "+user.getsID() + user.getToken());
+		
+		return user;
 	}
 	
 

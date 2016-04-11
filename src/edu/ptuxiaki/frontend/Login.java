@@ -82,9 +82,11 @@ public class Login  extends Composite {
 						fp.add(new Label(result.getsID()));
 						//create cookie based on the session with server
 						String sessionID = result.getsID();
+						String token = result.getToken();
                         final long DURATION = 1000 * 60 * 60 * 24 * 1;
                         Date expires = new Date(System.currentTimeMillis() + DURATION);
                         Cookies.setCookie("sid", sessionID, expires, null, "/", false);
+                        Cookies.setCookie("token", token, expires, null, "/", false);
 						
 					}
 					

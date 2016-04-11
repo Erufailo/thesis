@@ -15,6 +15,8 @@ public class UserData implements Serializable{
 	private String tel;
 	private String token;
 	private String sID;
+	private String role;
+	
 	private  UserData _instance = null;;
 	
 	
@@ -36,6 +38,12 @@ public class UserData implements Serializable{
 	}
 	
 	
+	public String getRole() {
+		return role;
+	}
+	public void setRole(String role) {
+		this.role = role;
+	}
 	
 	public String getName() {
 		return name;
@@ -92,6 +100,7 @@ public class UserData implements Serializable{
 	public void setsID(String sID) {
 		this.sID = sID;
 	}
+	
 	
 	
 }
