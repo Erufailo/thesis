@@ -17,6 +17,7 @@ public class Ptuxiaki_Hotel2997 implements EntryPoint {
 	final UserServiceAsync userService = GWT.create(UserService.class);
 	//initiate userRoles for changing the view depending the logged person
 	GuiRole userRoles = new GuiRole();
+	RoleCheck roleCheck = new RoleCheck();
 
 	@Override
 	public void onModuleLoad() {
@@ -24,7 +25,7 @@ public class Ptuxiaki_Hotel2997 implements EntryPoint {
 		
 		//add the style from css
 		RootPanel.get().addStyleName("body");
-	
+		userRoles.setRole(roleCheck.getRole());
 		//check if session is alive(if exists at all)
 		
 		 String token = Cookies.getCookie("token");
@@ -35,7 +36,12 @@ public class Ptuxiaki_Hotel2997 implements EntryPoint {
 		    } else
 		    {
 		        checkWithServerIfSessionIdIsStillLegal(sessionID, token);
+		        
+		        
 		    }
+		    userRoles.setRole(roleCheck.getRole());
+		
+		    
 		//userRoles.setRole("user");
 		//RootPanel.get("header").add(Header.getInstance("user"));
 
@@ -49,6 +55,8 @@ public class Ptuxiaki_Hotel2997 implements EntryPoint {
 		
 		History.addValueChangeHandler(new MyHistoryListener());
 		History.fireCurrentHistoryState();
+		
+		
 		//check if session is alive(if exists at all)
 //		 sessionID = Cookies.getCookie("sid"); 
 //		System.out.println("Client:" + sessionID);
@@ -86,10 +94,8 @@ public class Ptuxiaki_Hotel2997 implements EntryPoint {
 			
 			@Override
 			public void onSuccess(UserData result) {
-				
-				UserData user = result;
-				
-				userRoles.setRole("user");
+								
+				userRoles.setRole(result.getRole());
 				
 			}
 			

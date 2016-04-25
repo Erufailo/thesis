@@ -9,6 +9,8 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
+import edu.ptuxiaki.client.UserData;
+
 
 public class Database {
 	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -49,14 +51,15 @@ public class Database {
 
 		try {
 			conn = getMySQLConnection();
-			String query = "insert into users(fname, surname, email, passHash, tel) values(?,?,?,?,?)";
+			String query = "insert into users(fname, surname, email, passHash, tel, role) values(?,?,?,?,?,?)";
 			pstmt = (PreparedStatement) conn.prepareStatement(query);
 			pstmt.setString(1, name);
 			pstmt.setString(2, surname);
 			pstmt.setString(3, email);
 			pstmt.setString(4, password);
 			pstmt.setString(5, tel);
-
+			pstmt.setString(6, "customer");
+			
 			pstmt.executeUpdate();
 
 			System.out.println("added");
@@ -114,6 +117,70 @@ public class Database {
 		return null;
 	}
 	
+	
+	/**
+	 * 
+	 * 
+	 * @return returns all the users listed in the database as an UserData Object
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public UserData getUser(String email) throws ClassNotFoundException, SQLException {
+
+        UserData user = null;
+        
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet result = null;       
+		PreparedStatement pstmt = null;
+		
+
+        //initialize the variables to contain the results
+       
+//        String fname = "";
+//        String surname  = "";
+//        String email= "";
+//        String tel = "";
+//        String role = "";
+
+        try {
+            //initialize the SQL connection 
+        		  		
+    			conn = getMySQLConnection();
+    			String query = "SELECT * FROM users WHERE email =? ";
+    			pstmt = (PreparedStatement) conn.prepareStatement(query);
+    			pstmt.setString(1, email);
+    			
+    			result = pstmt.executeQuery();
+    			if (result.next()){
+    				user = new UserData();
+    				user.setName(result.getString(2));
+    				user.setSurname(result.getString(3));
+    				user.setEmail(result.getString(4));
+    				user.setTel(result.getString(6));
+    				user.setRole(result.getString(7));
+    				
+    			}            
+    			
+            //catch the exception if any
+        } catch (SQLException e) {
+            e.printStackTrace();
+            //close all the open connections
+        } finally {
+            if (result != null) {
+                result.close();
+            }
+            if (stmt != null) {
+                stmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        }
+        return user;
+    }
+
+	//****************************************************************************************************************
 	/**
 	 * Deletes a Person from the Database given his name and surname
 	 * 
@@ -149,64 +216,9 @@ public class Database {
 
 	}
 	
-	/**
-	 * 
-	 * 
-	 * @return returns all the users listed in the database as an Arraylist<String>
-	 * @throws ClassNotFoundException
-	 * @throws SQLException
-	 */
-	public ArrayList<String> showAllPersons() throws ClassNotFoundException, SQLException {
-
-        ArrayList<String> persons = new ArrayList<>();
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet result = null;
-
-        //initialize the variables to contain the results
-       
-        String name = "";
-        String surname  = "";
-        String address = "";
-        String tel = "";
-
-        try {
-            //initialize the SQL connection 
-            conn = getMySQLConnection();
-            stmt = (Statement) conn.createStatement();
-            //set the query and execute it
-            String query = "select * from users";
-            result = stmt.executeQuery(query);
-
-            //get the results and put them in the variables
-            while (result.next()) {
-                name = result.getString(3);
-                surname = result.getString(2);
-                address = result.getString(4);
-                tel = result.getString(5);
-                
-                String temp = name +" "+surname+" "+address+" "+tel;
-                persons.add(temp);
-               
-            }
-            //catch the exception if any
-        } catch (SQLException e) {
-            e.printStackTrace();
-            //close all the open connections
-        } finally {
-            if (result != null) {
-                result.close();
-            }
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-        return persons;
-    }
-
+	
+	
+	
 	/**
 	 * 
 	 * @return the first record of the table

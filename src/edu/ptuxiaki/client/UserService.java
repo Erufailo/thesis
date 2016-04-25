@@ -15,4 +15,6 @@ public interface UserService extends RemoteService{
 	public String changeRole();
 	
 	public UserData checkSessionWithServer(String sessionID, String token);
+	
+	public void logout();
 }

@@ -37,6 +37,10 @@ public class UserData implements Serializable{
 		return _instance;
 	}
 	
+	public void showAll(){
+		System.out.println(name +" "+ surname +" "+ email +" "+ tel +" "+ token +" "+ sID +" "+ role);
+	}
+	
 	
 	public String getRole() {
 		return role;

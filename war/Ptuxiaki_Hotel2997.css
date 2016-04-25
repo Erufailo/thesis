@@ -2,7 +2,13 @@
 .body{
 	background-color:#b3e0ff;
 }
-
+.adminHeader{
+	margin-top:20px;
+	margin-left: 20px;
+	margin-right: auto;
+	width: 50%;
+	background-color: #000 
+}
 
 .header{
 	

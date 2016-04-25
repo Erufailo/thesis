@@ -12,4 +12,6 @@ public interface UserServiceAsync {
 
 	void checkSessionWithServer(String sessionID, String token, AsyncCallback<UserData> callback);
 
+	void logout(AsyncCallback<Void> callback);
+
 }

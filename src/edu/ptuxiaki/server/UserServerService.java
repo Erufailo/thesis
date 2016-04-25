@@ -50,8 +50,11 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
 			
 			if(valid){
 				System.out.println("yes it is "+ email); 
+				UserData user = db.getUser(email);
+				
+				
 				// create session and store user
-				UserData user = new UserData();
+			
 				HttpServletRequest request = this.getThreadLocalRequest();
 				HttpSession session = request.getSession(true);
 				UUID token = UUID.randomUUID();
@@ -59,7 +62,7 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
 				user.setToken(token.toString());
 				user.setEmail(email);
 				session.setAttribute("user", user);
-				
+				user.showAll();
 				
 				return user;
 			}else{
@@ -78,7 +81,7 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
 		
 		
 		if(x++%2==0){
-			System.out.println("user");
+			System.out.println("customer");
 			return "user";
 			
 		}
@@ -91,10 +94,18 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
 		HttpServletRequest request = this.getThreadLocalRequest();
 		HttpSession session = request.getSession(true);
 		user = (UserData)session.getAttribute("user");
-		
-		System.out.println("Server: "+user.getsID() + user.getToken());
-		
+		if(!user.getsID().equals(sessionID)||!user.getToken().equals(token)){
+			user=null;
+		}
+	//	System.out.println("Session Server :"+user.getsID() +" " +user.getToken());					
 		return user;
+	}
+	@Override
+	public void logout() {
+		HttpServletRequest httpServletRequest = this.getThreadLocalRequest();
+        HttpSession session = httpServletRequest.getSession();
+        session.removeAttribute("user");
+		
 	}
 	
 

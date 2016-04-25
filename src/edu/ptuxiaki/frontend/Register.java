@@ -85,7 +85,7 @@ public class Register extends Composite {
 				if(checkFields()){
 					
 					 String password = passwordTxb.getText();/*(get password */
-				    // String hash = BCrypt.hashpw(password, BCrypt.gensalt());//generate hash
+				    
 				     
 				     userService.register(nameTxb.getText(), surnameTxb.getText(), emailTxb.getText(), password, telTxb.getText(),
 				    		 new AsyncCallback<Void>() {
