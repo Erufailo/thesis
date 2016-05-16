@@ -9,6 +9,15 @@
 	width: 50%;
 	background-color: #000 
 }
+.adminMainContent{
+	height:600px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
+	text-align:center;
+	background-color: #909090 
+
+}
 
 .header{
 	

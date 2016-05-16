@@ -14,12 +14,12 @@ public class AdminPanel extends Composite {
 	// instance of the class
 	static private AdminPanel _instance = null;
 	FlowPanel fp = new FlowPanel();
-	FlowPanel fp2= new FlowPanel();
+	
 	HorizontalPanel navPanel = new HorizontalPanel();
 
 	public AdminPanel() {
 		initPage();
-		initWidget(fp2);
+		initWidget(fp);
 
 	}
 	// Singleton for creating one instance of a page
@@ -32,16 +32,14 @@ public class AdminPanel extends Composite {
 
 	public void initPage() {
 
-		Label label = new Label("Kalispera pws pane ta kefia?");
-		Button button = new Button("asd");
+		Label label = new Label("Kalispera pws pane ta kefia? Admin");
+	
 		
 		
 		fp.add(label);
-		navPanel.add(button);
-		fp2.add(navPanel);
 		
-		fp2.addStyleName("adminHeader");
-		fp.addStyleName("mainContent");
+		
+		fp.addStyleName("adminMainContent");
 	}
 }
 

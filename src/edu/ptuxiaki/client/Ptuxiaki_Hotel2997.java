@@ -5,6 +5,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.Cookies;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import edu.ptuxiaki.frontend.Header;
@@ -25,6 +26,7 @@ public class Ptuxiaki_Hotel2997 implements EntryPoint {
 		
 		//add the style from css
 		RootPanel.get().addStyleName("body");
+		RootPanel.get("headerText").add(new Label("Welcome"));
 		userRoles.setRole(roleCheck.getRole());
 		//check if session is alive(if exists at all)
 		
