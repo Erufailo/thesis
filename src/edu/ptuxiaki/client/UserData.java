@@ -11,7 +11,7 @@ public class UserData implements Serializable{
 	private String name; 
 	private String surname;
 	private String email;
-	private String password;
+    private String password;
 	private String tel;
 	private String token;
 	private String sID;
@@ -37,6 +37,16 @@ public class UserData implements Serializable{
 		return _instance;
 	}
 	
+	
+	public UserData(String name,String surname, String email,String tel,String role) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.tel = tel;
+		this.role= role;
+	}
+
 	public void showAll(){
 		System.out.println(name +" "+ surname +" "+ email +" "+ tel +" "+ token +" "+ sID +" "+ role);
 	}

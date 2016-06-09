@@ -1,6 +1,7 @@
 package edu.ptuxiaki.server;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +41,66 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
 				
 		
 	}
+	
+	@Override
+	public void adminRegister(String name, String surname, String email, String password, String tel, String role) {
+		
+		
+		System.out.println(name + " "+ password);
+		//generate hash
+		String hash = BCrypt.hashpw(password, BCrypt.gensalt());
+		
+		System.out.println(name + " "+ hash);
+		
+		try {
+			//register the user in database
+			db.addUserFromAdmin(name, surname, email, hash, tel, role);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		
+	}
+	
+	@Override
+	public void adminEditUser(String name, String surname, String email, String tel, String role) {
+		try {
+			db.editUserFromAdmin(name, surname, email, tel, role);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public void adminDeleteUser(String email) {
+		try {
+			db.deleteUser(email);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Override
+	public ArrayList<UserData> getAllUsers() {
+		ArrayList<UserData> users= null;
+		try {
+			 users = db.getAllUsers();
+			
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return users;
+	}
+	
+	
+	
 	@Override
 	public UserData login(String email, String password) {
 		try {
@@ -107,6 +168,12 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
         session.removeAttribute("user");
 		
 	}
+
+	
+
+	
+
+	
 	
 
 }

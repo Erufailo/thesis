@@ -51,18 +51,17 @@ public class Database {
 
 		try {
 			conn = getMySQLConnection();
-			String query = "insert into users(fname, surname, email, passHash, tel, role) values(?,?,?,?,?,?)";
+			String query = "insert into users(email, firstname, lastname, telephone, role ,password ) values(?,?,?,?,?,?)";
 			pstmt = (PreparedStatement) conn.prepareStatement(query);
-			pstmt.setString(1, name);
-			pstmt.setString(2, surname);
-			pstmt.setString(3, email);
-			pstmt.setString(4, password);
-			pstmt.setString(5, tel);
-			pstmt.setString(6, "customer");
-			
+			pstmt.setString(1, email);
+			pstmt.setString(2, name);
+			pstmt.setString(3, surname);
+			pstmt.setString(4, tel);
+			pstmt.setString(5, "customer");
+			pstmt.setString(6, password);
 			pstmt.executeUpdate();
-
-			System.out.println("added");
+			
+			System.out.println("added ");
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -75,11 +74,12 @@ public class Database {
 				conn.close();
 			}
 		}
+		
 
 	}
 	
 	/**
-	 * Finds a single user in the database given his email 
+	 * Finds the user passhash in the database given his email 
 	 * 
 	 * @param email
 	 * @param Password hash
@@ -101,7 +101,8 @@ public class Database {
 			result = pstmt.executeQuery();
 			if (result.next())
 				//return passhash for check
-				return (result.getString(5));
+	
+				return (result.getString(7));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -121,7 +122,7 @@ public class Database {
 	/**
 	 * 
 	 * 
-	 * @return returns all the users listed in the database as an UserData Object
+	 * @return returns a user listed in the database as an UserData Object
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
@@ -154,11 +155,11 @@ public class Database {
     			result = pstmt.executeQuery();
     			if (result.next()){
     				user = new UserData();
-    				user.setName(result.getString(2));
-    				user.setSurname(result.getString(3));
-    				user.setEmail(result.getString(4));
-    				user.setTel(result.getString(6));
-    				user.setRole(result.getString(7));
+    				user.setEmail(result.getString(2));
+    				user.setName(result.getString(3));
+    				user.setSurname(result.getString(4));
+    				user.setTel(result.getString(5));
+    				user.setRole(result.getString(6));
     				
     			}            
     			
@@ -179,26 +180,168 @@ public class Database {
         }
         return user;
     }
-
-	//****************************************************************************************************************
 	/**
-	 * Deletes a Person from the Database given his name and surname
-	 * 
-	 * @param firstName
-	 * @param lastName
+	 * register from admin panel.
+	 * @param name
+	 * @param surname
+	 * @param email
+	 * @param password
+	 * @param tel
+	 * @param role
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
-	public void deleteUser(String firstName, String lastName) throws ClassNotFoundException, SQLException {
+	public void addUserFromAdmin(String name, String surname, String email, String password, String tel,String role)
+			throws ClassNotFoundException, SQLException {
+
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
 		try {
 			conn = getMySQLConnection();
-			String query = "DELETE FROM users WHERE FirstName =? AND LastName = ?";
+			String query = "insert into users(email, firstname, lastname, telephone, role ,password ) values(?,?,?,?,?,?)";
 			pstmt = (PreparedStatement) conn.prepareStatement(query);
-			pstmt.setString(1, firstName);
-			pstmt.setString(2, lastName);
+			pstmt.setString(1, email);
+			pstmt.setString(2, name);
+			pstmt.setString(3, surname);
+			pstmt.setString(4, tel);
+			pstmt.setString(5, role);
+			pstmt.setString(6, password);
+			pstmt.executeUpdate();
+			
+			System.out.println("added ");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// close all the open connections
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	
+		
+
+	}
+	public void editUserFromAdmin(String name, String surname, String email , String tel,String role)
+			throws ClassNotFoundException, SQLException {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getMySQLConnection();
+			String query = "UPDATE users SET email=? firstname=? lastname=? telephone=? role=? WHERE email=?";
+			pstmt = (PreparedStatement) conn.prepareStatement(query);
+			pstmt.setString(1, email);
+			pstmt.setString(2, name);
+			pstmt.setString(3, surname);
+			pstmt.setString(4, tel);
+			pstmt.setString(5, role);
+			pstmt.setString(6, email);
+			pstmt.executeUpdate();
+			
+			System.out.println("updated ");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// close all the open connections
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	
+		
+
+	}
+	
+	
+	/**
+	 * 
+	 * @return ArrayList of UserData
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public ArrayList<UserData> getAllUsers() throws ClassNotFoundException, SQLException {
+		
+		ArrayList<UserData> users = new  ArrayList<>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet result = null;
+		
+
+		// initialize the variables to contain the results
+		String email = "";
+		String name = "";
+		String surname = "";
+		String tel = "";
+		String role= "";
+
+		try {
+			// initialize the SQL connection
+			conn = getMySQLConnection();
+			stmt = (Statement) conn.createStatement();
+			// set the query and execute it
+			String query = "SELECT * FROM users";
+			result = stmt.executeQuery(query);
+
+			// get the results and put them in the variables
+			while (result.next()) {
+				email = result.getString(2);
+				name = result.getString(3);
+				surname = result.getString(4);
+				tel = result.getString(5);
+				role = result.getString(6);
+
+				String temp = name + " " + surname + " " + email + " " + tel+" " + role;
+				System.out.println(temp);
+				
+				UserData data = new UserData(name,surname,email,tel,role);
+				users.add(data);
+
+			}
+			// catch the exception if any
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// close all the open connections
+		} finally {
+			if (result != null) {
+				result.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return users;
+
+	}
+	/**
+	 * Deletes a Person from the Database given his email
+	 * 
+	 * @param email
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
+	public void deleteUser(String email) throws ClassNotFoundException, SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getMySQLConnection();
+			String query = "DELETE FROM users WHERE email =?";
+			pstmt = (PreparedStatement) conn.prepareStatement(query);
+			pstmt.setString(1, email);
+		
 
 			pstmt.executeUpdate();
 
@@ -217,6 +360,10 @@ public class Database {
 	}
 	
 	
+	
+	
+
+	//****************************************************************************************************************
 	
 	
 	/**
