@@ -99,6 +99,19 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
 		return users;
 	}
 	
+	@Override
+	public UserData getSingleUser(String email) {
+		UserData user=null;
+		try {
+			user =db.getUser(email);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
+	}
+
+	
 	
 	
 	@Override
@@ -168,6 +181,7 @@ public class UserServerService extends RemoteServiceServlet implements UserServi
         session.removeAttribute("user");
 		
 	}
+
 
 	
 

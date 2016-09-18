@@ -26,4 +26,6 @@ public interface UserServiceAsync {
 
 	void getAllUsers(AsyncCallback<ArrayList<UserData>> callback);
 
+	void getSingleUser(String email,AsyncCallback<UserData> callback);
+
 }

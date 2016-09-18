@@ -18,6 +18,8 @@ public interface UserService extends RemoteService{
 	
 	public void adminDeleteUser(String email);
 	
+	public UserData getSingleUser(String email);
+	
 	public ArrayList<UserData> getAllUsers();
 	
 	public UserData login(String email, String password);

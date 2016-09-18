@@ -228,20 +228,30 @@ public class Database {
 	}
 	public void editUserFromAdmin(String name, String surname, String email , String tel,String role)
 			throws ClassNotFoundException, SQLException {
-
+		ResultSet result = null;  
 		Connection conn = null;
 		PreparedStatement pstmt = null;
+		int id = -1;
 
 		try {
 			conn = getMySQLConnection();
-			String query = "UPDATE users SET email=? firstname=? lastname=? telephone=? role=? WHERE email=?";
+			String query = "select user_id FROM users WHERE email = ?";
 			pstmt = (PreparedStatement) conn.prepareStatement(query);
+			pstmt.setString(1, email);
+			result= pstmt.executeQuery();
+			if (result.next()){
+				id= result.getInt(1);
+				System.out.println(id);
+			}
+			pstmt.close();
+			pstmt= null;
+			String query2 = "UPDATE users SET email=?, firstname=?, lastname=?, telephone=?, role=? WHERE user_id="+id+"";
+			pstmt = (PreparedStatement) conn.prepareStatement(query2);
 			pstmt.setString(1, email);
 			pstmt.setString(2, name);
 			pstmt.setString(3, surname);
 			pstmt.setString(4, tel);
 			pstmt.setString(5, role);
-			pstmt.setString(6, email);
 			pstmt.executeUpdate();
 			
 			System.out.println("updated ");
