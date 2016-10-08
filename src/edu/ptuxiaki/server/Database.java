@@ -9,6 +9,7 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
+import edu.ptuxiaki.client.RoomData;
 import edu.ptuxiaki.client.UserData;
 
 
@@ -43,6 +44,9 @@ public class Database {
 	 * @throws ClassNotFoundException
 	 * @throws SQLException
 	 */
+	
+	
+	//#####               USERS      ###########
 	public void register(String name, String surname, String email, String password, String tel)
 			throws ClassNotFoundException, SQLException {
 
@@ -372,8 +376,282 @@ public class Database {
 	
 	
 	
-
+	//#######                  END USERS                                ###########
+	
 	//****************************************************************************************************************
+		
+	//######                   ROOMS                          ###########
+	
+	public void addRoomFromAdmin(String roomName, int capacity, String description, int available, String price)
+			throws ClassNotFoundException, SQLException {
+
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getMySQLConnection();
+			String query = "insert into rooms(room_name, capacity, description, available, price) values(?,?,?,?,?)";
+			pstmt = (PreparedStatement) conn.prepareStatement(query);
+			pstmt.setString(1, roomName);
+			pstmt.setInt(2, capacity);
+			pstmt.setString(3, description);
+			pstmt.setInt(4, available);
+			pstmt.setString(5, price);
+			pstmt.executeUpdate();
+			
+			System.out.println("added ");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// close all the open connections
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	
+		
+
+	}
+	
+	public void editRoomFromAdmin(String roomName, int capacity, String description, int available, String price)
+			throws ClassNotFoundException, SQLException {
+		ResultSet result = null;  
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int id = -1;
+
+		try {
+			conn = getMySQLConnection();
+			String query = "select room_id FROM rooms WHERE room_name = ?";
+			pstmt = (PreparedStatement) conn.prepareStatement(query);
+			pstmt.setString(1, roomName);
+			result= pstmt.executeQuery();
+			if (result.next()){
+				id= result.getInt(1);
+				System.out.println(id);
+			}
+			pstmt.close();
+			pstmt= null;
+			String query2 = "UPDATE rooms SET room_name=?, capacity=?, description=?, available=?, price=? WHERE room_id="+id+"";
+			pstmt = (PreparedStatement) conn.prepareStatement(query2);
+			pstmt.setString(1, roomName);
+			pstmt.setInt(2, capacity);
+			pstmt.setString(3, description);
+			pstmt.setInt(4, available);
+			pstmt.setString(5, price);
+			pstmt.executeUpdate();
+			
+			System.out.println("updated ");
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// close all the open connections
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+	
+		
+
+	}
+	
+	
+	public void deleteRoom(String roomName) throws ClassNotFoundException, SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getMySQLConnection();
+			String query = "DELETE FROM rooms WHERE room_name =?";
+			pstmt = (PreparedStatement) conn.prepareStatement(query);
+			pstmt.setString(1, roomName);
+		
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// close all the open connections
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+
+	}
+	
+	
+public ArrayList<RoomData> getAllRooms() throws ClassNotFoundException, SQLException {
+		
+		ArrayList<RoomData> rooms = new  ArrayList<>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet result = null;
+		
+
+		// initialize the variables to contain the results
+		String roomName = "";
+		int capacity = 0;
+		String description = "";
+		int available = 0;
+		String price= "";
+
+		try {
+			// initialize the SQL connection
+			conn = getMySQLConnection();
+			stmt = (Statement) conn.createStatement();
+			// set the query and execute it
+			String query = "SELECT * FROM rooms";
+			result = stmt.executeQuery(query);
+
+			// get the results and put them in the variables
+			while (result.next()) {
+				roomName = result.getString(2);
+				capacity = result.getInt(3);
+				description = result.getString(4);
+				available = result.getInt(5);
+				price = result.getString(6);
+
+				String temp = roomName + " " + capacity + " " + description + " " + available+" " + price;
+				System.out.println(temp);
+				
+				RoomData data = new RoomData(roomName, capacity, description, available, price);
+				rooms.add(data);
+
+			}
+			// catch the exception if any
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// close all the open connections
+		} finally {
+			if (result != null) {
+				result.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return rooms;
+
+	}
+public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLException {
+
+    RoomData room = null;
+    
+    Connection conn = null;
+    Statement stmt = null;
+    ResultSet result = null;       
+	PreparedStatement pstmt = null;
+
+    try {
+        //initialize the SQL connection 
+    		  		
+			conn = getMySQLConnection();
+			String query = "SELECT * FROM rooms WHERE room_name =? ";
+			pstmt = (PreparedStatement) conn.prepareStatement(query);
+			pstmt.setString(1, roomName);
+			
+			result = pstmt.executeQuery();
+			if (result.next()){
+				room = new RoomData();
+				room.setRoomName(result.getString(2));
+				room.setCapacity(result.getInt(3));
+				room.setDescription(result.getString(4));
+				room.setAvailable(result.getInt(5));
+				room.setPrice(result.getString(6));
+				
+			}            
+			
+        //catch the exception if any
+    } catch (SQLException e) {
+        e.printStackTrace();
+        //close all the open connections
+    } finally {
+        if (result != null) {
+            result.close();
+        }
+        if (stmt != null) {
+            stmt.close();
+        }
+        if (conn != null) {
+            conn.close();
+        }
+    }
+    return room;
+}
+	
+	
+	
+	
+	
+	public boolean roomAvailable(String roomName) throws ClassNotFoundException, SQLException {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet result = null;
+		int available = 0;
+		boolean availability = false;
+
+		try {
+			conn = getMySQLConnection();
+			String query = "SELECT FROM rooms WHERE room_name =?";
+			pstmt = (PreparedStatement) conn.prepareStatement(query);
+			pstmt.setString(1, roomName);
+		
+			result = pstmt.executeQuery(query);
+			
+			if(result.next()){
+				available = result.getInt(5);
+				if(available == 0){
+					availability = false;
+				}else{
+					availability = true;
+				}
+				
+			}
+			//pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// close all the open connections
+		} finally {
+			if (pstmt != null) {
+				pstmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return availability;
+	}
+		
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/**

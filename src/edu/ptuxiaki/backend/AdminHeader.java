@@ -58,6 +58,15 @@ public class AdminHeader extends Composite {
 			}
 		});
 		
+		newRoom.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("mainContent").clear();
+				RootPanel.get("mainContent").add(Rooms.getInstance());
+			}
+		});
+		
 		navPanel.add(overview);
 		navPanel.add(users);
 		navPanel.add(newRoom);

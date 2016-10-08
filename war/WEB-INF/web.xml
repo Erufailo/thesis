@@ -14,6 +14,10 @@
 		<servlet-name>bookingServlet</servlet-name>
 		<servlet-class>edu.ptuxiaki.server.BookingServerService</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>roomServlet</servlet-name>
+		<servlet-class>edu.ptuxiaki.server.RoomServerService</servlet-class>
+	</servlet>
 
 	<!-- TODO: Add <servlet-mapping> tags for each <servlet> here. -->
 	
@@ -24,6 +28,10 @@
 	<servlet-mapping>
 		<servlet-name>bookingServlet</servlet-name>
 		<url-pattern>/ptuxiaki_hotel2997/booking</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>roomServlet</servlet-name>
+		<url-pattern>/ptuxiaki_hotel2997/room</url-pattern>
 	</servlet-mapping>
 	
   

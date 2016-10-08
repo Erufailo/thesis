@@ -92,7 +92,7 @@ public class Login extends Composite {
 						String token = result.getToken();
 						final long DURATION = 1000 * 60 * 60 * 24 * 1;
 						Date expires = new Date(System.currentTimeMillis() + DURATION);
-						Cookies.setCookie("sid", sessionID, expires, null, "/", false);
+						Cookies.setCookie("sid", sessionID, expires, null, "/", false);//new Date(System.currentTimeMillis()+36000000)
 						Cookies.setCookie("token", token, expires, null, "/", false);
 						userRoles.setRole(result.getRole());
 
