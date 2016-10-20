@@ -9,7 +9,7 @@ public class RoomData implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	
+	private int id;
 	private String roomName;
 	private int capacity;
 	private String description;
@@ -25,6 +25,15 @@ public class RoomData implements Serializable{
 	
 	public RoomData(String roomName, int capacity, String description, int available, String price) {
 		super();
+		this.roomName = roomName;
+		this.capacity = capacity;
+		this.description = description;
+		this.available = available;
+		this.price = price;
+	}
+	public RoomData(int id,String roomName, int capacity, String description, int available, String price) {
+		super();
+		this.setId(id);
 		this.roomName = roomName;
 		this.capacity = capacity;
 		this.description = description;
@@ -61,6 +70,16 @@ public class RoomData implements Serializable{
 	}
 	public void setPrice(String price) {
 		this.price = price;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

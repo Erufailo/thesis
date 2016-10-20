@@ -1,10 +1,14 @@
 package edu.ptuxiaki.backend;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.HasKeyboardSelectionPolicy.KeyboardSelectionPolicy;
 import com.google.gwt.user.cellview.client.TextColumn;
@@ -21,10 +25,16 @@ import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
+import edu.ptuxiaki.client.BookingService;
+import edu.ptuxiaki.client.BookingServiceAsync;
+import edu.ptuxiaki.client.RoomData;
+import edu.ptuxiaki.client.RoomService;
+import edu.ptuxiaki.client.RoomServiceAsync;
 import edu.ptuxiaki.client.UserData;
 import edu.ptuxiaki.client.UserService;
 import edu.ptuxiaki.client.UserServiceAsync;
@@ -33,6 +43,7 @@ public class Users extends Composite {
 
 	// instance of the class
 	final UserServiceAsync userService = GWT.create(UserService.class);
+	final BookingServiceAsync bookingService = GWT.create(BookingService.class);
 	static private Users _instance = null;
 	FlowPanel fp = new FlowPanel();
 	VerticalPanel panel = new VerticalPanel();
@@ -64,6 +75,7 @@ public class Users extends Composite {
 		Button findButton = new Button("Find User");
 		Button updateButton = new Button("Update Table");
 		Button delete = new Button("Delete User");
+		Button makeBooking = new Button("Make a Booking");
 
 		add.addClickHandler(new ClickHandler() {
 
@@ -188,14 +200,23 @@ public class Users extends Composite {
 			}
 		});
 		
-		
+		makeBooking.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				newBookingPopup(getSelection());
+				
+			}
+		});
 
 		bottomPanel.add(add);
 		bottomPanel.add(edit);
 		bottomPanel.add(findTextBox);
 		bottomPanel.add(findButton);
 		bottomPanel.add(delete);
+		bottomPanel.add(makeBooking);
 		bottomPanel.add(updateButton);
+		
 
 		panel.setBorderWidth(1);
 		panel.setWidth("500");
@@ -292,6 +313,157 @@ public class Users extends Composite {
 
 		return table;
 	}
+	
+	
+	public void newBookingPopup(String user){
+		
+		final DialogBox dlBox = new DialogBox();
+		final Label success = new Label();
+		HTML text;
+		dlBox.setTitle("Add User");
+		dlBox.setText("Add a new User");
+		VerticalPanel dialogVPanel = new VerticalPanel();
+		HorizontalPanel hPanel = new HorizontalPanel();
+		final ListBox rooms = new ListBox();
+		rooms.setVisibleItemCount(1);
+		text = new HTML("Please select a room!<br>");
+		
+		DateTimeFormat dateFormat = DateTimeFormat.getFormat("dd-MM-yyyy");
+	      final DateBox dateBox = new DateBox();
+	      dateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
+	      
+	      final  Label test = new Label("Check-in Date");
+	      dateBox.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				
+				//test.setText(dateBox.getTextBox().getText());
+				
+			}
+		});
+	      final DateBox dateBox2 = new DateBox();
+	      dateBox2.setFormat(new DateBox.DefaultFormat(dateFormat));
+	      
+	      final  Label test2 = new Label("Check-out Date");
+	      dateBox2.addValueChangeHandler(new ValueChangeHandler<Date>() {
+			
+			@Override
+			public void onValueChange(ValueChangeEvent<Date> event) {
+				
+				//test2.setText(dateBox2.getTextBox().getText());
+				
+			}
+		});
+	      
+	      
+	      
+	      
+		
+		
+		Button checkRooms = new Button("Check Available Rooms");
+		
+		checkRooms.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				bookingService.getAvailableRooms(dateBox.getTextBox().getText(), dateBox2.getTextBox().getText(), new AsyncCallback<ArrayList<RoomData>>() {
+					
+					@Override
+					public void onSuccess(ArrayList<RoomData> result) {
+//						if(rooms.getItemCount()!=0){
+//							for(int i=0; i<=rooms.getItemCount();i++){
+//								rooms.removeItem(i);
+//							}
+//						}
+						for(int i=0; i<result.size();i++){
+							rooms.addItem(result.get(i).getRoomName());
+						}
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+			}
+		});
+		
+		
+		Button booking = new Button("Complete Booking");
+		//final int roomId;
+		//final int userId;
+		booking.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				
+			
+				
+				bookingService.getRoomIdFromName(rooms.getSelectedItemText(), new AsyncCallback<Integer>() {
+					
+					@Override
+					public void onSuccess(Integer result) {
+					//	roomId=result;
+						
+					}
+					
+					@Override
+					public void onFailure(Throwable caught) {
+						// TODO Auto-generated method stub
+						
+					}
+				});
+				
+				//bookingService.addBooking(dateBox.getTextBox().getText(), dateBox2.getTextBox().getText(), userId, roomId, callback);
+				
+			}
+		});
+		
+		
+		Button close = new Button("Close window");
+		
+		
+		
+		dialogVPanel.setHeight("600");
+		dialogVPanel.setWidth("500");
+		dialogVPanel.setSpacing(10);
+
+		dlBox.setAnimationEnabled(true);
+
+		
+		dialogVPanel.add(test);
+		dialogVPanel.add(dateBox);
+		dialogVPanel.add(test2);
+		dialogVPanel.add(dateBox2);
+		dialogVPanel.add(checkRooms);
+		dialogVPanel.add(text);
+
+		dialogVPanel.add(rooms);
+		
+		dialogVPanel.add(success);
+
+		hPanel.add(booking);
+		
+		hPanel.add(close);
+		dialogVPanel.add(hPanel);
+
+		dlBox.setWidget(dialogVPanel);
+		dlBox.center();
+		dlBox.show();
+		close.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				dlBox.hide();
+
+			}
+		});
+		
+	}
+	
 
 	public void addUserPopup() {
 		final DialogBox dlBox = new DialogBox();
