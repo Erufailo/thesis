@@ -164,6 +164,7 @@ public class Database {
     			result = pstmt.executeQuery();
     			if (result.next()){
     				user = new UserData();
+    				user.setId(result.getInt(1));
     				user.setEmail(result.getString(2));
     				user.setName(result.getString(3));
     				user.setSurname(result.getString(4));
@@ -171,7 +172,7 @@ public class Database {
     				user.setRole(result.getString(6));
     				
     			}            
-    			
+    			System.out.println("Get User: " +user.getId());
             //catch the exception if any
         } catch (SQLException e) {
             e.printStackTrace();
@@ -573,6 +574,7 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 			result = pstmt.executeQuery();
 			if (result.next()){
 				room = new RoomData();
+				room.setId(result.getInt(1));
 				room.setRoomName(result.getString(2));
 				room.setCapacity(result.getInt(3));
 				room.setDescription(result.getString(4));
@@ -580,6 +582,7 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 				room.setPrice(result.getString(6));
 				
 			}            
+			System.out.println("get Room: " +room.getId());
 			
         //catch the exception if any
     } catch (SQLException e) {
@@ -756,7 +759,7 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet result = null;
-		String totalPrice= "";
+		String totalPrice="no room";
 
 		try {
 			
@@ -767,6 +770,7 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 			result= pstmt.executeQuery();
 			while (result.next()){
 				String price = result.getString(1);
+				System.out.println("price: "+price);
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		    	
 				Date date1 = sdf.parse(startDate);
@@ -775,18 +779,19 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 					//calculate the days
 				int daysBetween = CalendarUtil.getDaysBetween(date1,date2);
 				totalPrice = (Integer.parseInt(price)*daysBetween)+"";
+				
 			}
 			
-			
+			System.out.println("ADD BOOKING: "+startDate +" "+endDate+" "+userId+" "+roomId+" "+totalPrice);
 			
 			pstmt.close();
 			pstmt= null;
-			String query = "insert into bookings(start_date, end_date, user_id, room_id, booking_status, total_price) values(STR_TO_DATE('?', '%d-%m-%Y'),STR_TO_DATE('?', '%d-%m-%Y'),?,?,?)";
+			String query = "insert into bookings(start_date, end_date, user_id, room_id, booking_status, total_price) values(STR_TO_DATE(?, '%d-%m-%Y'),STR_TO_DATE(?, '%d-%m-%Y'),?,?,?,?)";
 			pstmt = (PreparedStatement) conn.prepareStatement(query);
 			pstmt.setString(1, startDate);
 			pstmt.setString(2, endDate);
-			pstmt.setInt(3, userId);
-			pstmt.setInt(4, roomId);
+			pstmt.setInt(3, roomId);//bug
+			pstmt.setInt(4, userId);
 			pstmt.setInt(5, 0);
 			pstmt.setString(6, totalPrice);
 			pstmt.executeUpdate();
@@ -820,10 +825,11 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 		ResultSet result = null;
 		String query="";
 		
+		
+		
 
 		// initialize the variables to contain the results
-		int roomId=0;
-		int userId=0;
+		
 	    int bookingId=0;
 		String roomName=null;
 		String startDate=null;
@@ -839,53 +845,62 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 			stmt = (Statement) conn.createStatement();
 			// set the query and execute it
 			if(isCheckedIn){
-				query = "select * from bookings WHERE booking_status = 1";
+				query = "select * FROM bookings inner join rooms on bookings.room_id = rooms.room_id"
+												+" inner join users on bookings.user_id = users.user_id"
+												+" WHERE booking_status = 1";
 			}else{
-				query = "select * from bookings";
+				query = "select * FROM bookings inner join rooms on bookings.room_id = rooms.room_id inner join users on bookings.user_id = users.user_id";
+						
 			}
+			
+			
 			result = stmt.executeQuery(query);
-
+		
 			// get the results and put them in the variables
 			while (result.next()) {
 				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yy");
 				bookingId=result.getInt(1);
 				startDate =formatter.format(result.getDate(2));
 				endDate =formatter.format(result.getDate(3));
-				userId=result.getInt(4);
-				roomId=result.getInt(5);
 				bookingStatus= result.getInt(6);
 				price= result.getString(7);
+				roomName = result.getString(9);
+				firstName = result.getString(16);
+				lastName = result.getString(17);
+				
+				
+				BookingData data = new BookingData(bookingId, roomName, startDate, endDate, firstName, lastName, bookingStatus, price);
+				bookings.add(data);
 			}
 			
-			result.close();
-			stmt.close();
-			result=null;
-			stmt=null;
-			stmt = (Statement) conn.createStatement();
-			String query2 = "SELECT room_name FROM rooms WHERE room_id = "+roomId+"";
-			result = stmt.executeQuery(query2);
+//			result.close();
+//			stmt.close();
+//			result=null;
+//			stmt=null;
+//			stmt = (Statement) conn.createStatement();
+//			String query2 = "SELECT room_name FROM rooms WHERE room_id = "+roomId+"";
+//			result = stmt.executeQuery(query2);
+//			
+//			while (result.next()) {
+//				
+//				roomName = result.getString(1);
+//			}		
+//			result.close();
+//			stmt.close();
+//			result=null;
+//			stmt=null;
+//			
+//			stmt = (Statement) conn.createStatement();
+//			String query3 = "SELECT * FROM users WHERE user_id = "+userId+"";
+//			result = stmt.executeQuery(query3);
+//			
+//			while (result.next()) {
+//				
+//				firstName = result.getString(3);
+//				lastName = result.getString(4);
+//			}		
 			
-			while (result.next()) {
-				
-				roomName = result.getString(1);
-			}		
-			result.close();
-			stmt.close();
-			result=null;
-			stmt=null;
 			
-			stmt = (Statement) conn.createStatement();
-			String query3 = "SELECT firstname lastname FROM users WHERE user_id = "+userId+"";
-			result = stmt.executeQuery(query3);
-			
-			while (result.next()) {
-				
-				firstName = result.getString(1);
-				lastName = result.getString(2);
-			}		
-			
-			BookingData data = new BookingData(bookingId, roomName, startDate, endDate, firstName, lastName, bookingStatus, price);
-			bookings.add(data);
 			
 			
 			
@@ -922,7 +937,7 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 		try {
 			conn = getMySQLConnection();
 			
-			String query = "UPDATE bookings SET booking_status = 1 WHERE room_id=?";
+			String query = "UPDATE bookings SET booking_status = 1 WHERE bookings_id=?";
 			pstmt = (PreparedStatement) conn.prepareStatement(query);
 			pstmt.setInt(1, bookingId);
 		
@@ -955,7 +970,7 @@ public void checkOut(int bookingId)throws ClassNotFoundException, SQLException {
 		try {
 			conn = getMySQLConnection();
 			
-			String query = "DELETE FROM bookings WHERE room_id=?";
+			String query = "DELETE FROM bookings WHERE bookings_id=?";
 			pstmt = (PreparedStatement) conn.prepareStatement(query);
 			pstmt.setInt(1, bookingId);
 		
@@ -1059,9 +1074,7 @@ public int getRoomIdFromName(String roomName) throws ClassNotFoundException, SQL
     return roomId;
 }	
 
-	
-	
-	
+
 	
 	/**
 	 * 

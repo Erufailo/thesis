@@ -22,4 +22,6 @@ public interface BookingServiceAsync {
 
 	void getRoomIdFromName(String roomName, AsyncCallback<Integer> callback);
 
+
+
 }

@@ -44,12 +44,14 @@ public class Users extends Composite {
 	// instance of the class
 	final UserServiceAsync userService = GWT.create(UserService.class);
 	final BookingServiceAsync bookingService = GWT.create(BookingService.class);
+	final RoomServiceAsync roomService = GWT.create(RoomService.class);
 	static private Users _instance = null;
 	FlowPanel fp = new FlowPanel();
 	VerticalPanel panel = new VerticalPanel();
 	HorizontalPanel bottomPanel = new HorizontalPanel();
 	ArrayList<UserData> USERS = new ArrayList<>();
 	private String selection = null;
+	private int roomId;
 
 	public Users() {
 		initPage();
@@ -66,7 +68,7 @@ public class Users extends Composite {
 	}
 
 	public void initPage() {
-
+		
 		final CellTable<UserData> table = createTable();
 		
 		Button add = new Button("Add User");
@@ -316,7 +318,9 @@ public class Users extends Composite {
 	
 	
 	public void newBookingPopup(String user){
-		
+		final UserData userData = new UserData();
+		final RoomData roomData = new RoomData();
+		final String email = user;
 		final DialogBox dlBox = new DialogBox();
 		final Label success = new Label();
 		HTML text;
@@ -393,8 +397,7 @@ public class Users extends Composite {
 		
 		
 		Button booking = new Button("Complete Booking");
-		//final int roomId;
-		//final int userId;
+		
 		booking.addClickHandler(new ClickHandler() {
 			
 			@Override
@@ -402,22 +405,58 @@ public class Users extends Composite {
 				
 			
 				
-				bookingService.getRoomIdFromName(rooms.getSelectedItemText(), new AsyncCallback<Integer>() {
+			
+				roomService.getRoom(rooms.getSelectedItemText(),new AsyncCallback<RoomData>() {
 					
 					@Override
-					public void onSuccess(Integer result) {
-					//	roomId=result;
+					public void onSuccess(RoomData result) {
+						GWT.log("get Room "+result.getId());
+						roomData.setId(result.getId());
+						GWT.log("get Room2 "+roomData.getId());
+						userService.getSingleUser(email, new AsyncCallback<UserData>() {
+							
+							@Override
+							public void onSuccess(UserData result) {
+								userData.setId(result.getId());
+								
+								bookingService.addBooking(dateBox.getTextBox().getText(), dateBox2.getTextBox().getText(), roomData.getId(), userData.getId(), new AsyncCallback<Void>() {
+									
+									@Override
+									public void onSuccess(Void result) {
+										success.setText("Booking added");
+										
+									}
+									
+									@Override
+									public void onFailure(Throwable caught) {
+										// TODO Auto-generated method stub
+										
+									}
+								});
+								
+							}
+							
+							@Override
+							public void onFailure(Throwable caught) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
 						
 					}
 					
 					@Override
 					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
+						
 						
 					}
 				});
 				
-				//bookingService.addBooking(dateBox.getTextBox().getText(), dateBox2.getTextBox().getText(), userId, roomId, callback);
+				
+				
+				GWT.log("get Room3 "+roomData.getId());
+				final int x = roomData.getId();
+				
 				
 			}
 		});

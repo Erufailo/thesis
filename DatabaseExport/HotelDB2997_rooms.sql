@@ -30,7 +30,7 @@ CREATE TABLE `rooms` (
   `available` tinyint(1) DEFAULT NULL,
   `price` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`room_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `rooms` (
 
 LOCK TABLES `rooms` WRITE;
 /*!40000 ALTER TABLE `rooms` DISABLE KEYS */;
-INSERT INTO `rooms` VALUES (3,'13',2,'asdasd',1,'15'),(4,'14',4,'something',1,'20'),(5,'15',2,'aqwer',1,'24');
+INSERT INTO `rooms` VALUES (1,'13',2,'asdasd',1,'15'),(2,'14',4,'something',1,'20'),(3,'15',2,'aqwer',1,'24'),(4,'16',3,'asdasd',1,'25'),(5,'17',5,'aqweqwe',1,'30'),(6,'18',4,'asdasd',1,'50'),(7,'19',3,'asd',1,'20');
 /*!40000 ALTER TABLE `rooms` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-11 20:21:03
+-- Dump completed on 2016-10-24 19:26:32

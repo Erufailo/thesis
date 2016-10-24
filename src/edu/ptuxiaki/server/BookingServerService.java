@@ -12,6 +12,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import edu.ptuxiaki.client.BookingData;
 import edu.ptuxiaki.client.BookingService;
 import edu.ptuxiaki.client.RoomData;
+import edu.ptuxiaki.client.UserData;
 
 public class BookingServerService extends RemoteServiceServlet implements BookingService{
 
@@ -126,6 +127,7 @@ public class BookingServerService extends RemoteServiceServlet implements Bookin
 		}
 		return roomId;
 	}
+
 	
 	
 

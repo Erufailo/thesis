@@ -23,4 +23,6 @@ public interface BookingService extends RemoteService {
 	
 	public int getRoomIdFromName(String roomName);
 	
+	
+	
 }

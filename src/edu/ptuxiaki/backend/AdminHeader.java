@@ -67,6 +67,15 @@ public class AdminHeader extends Composite {
 			}
 		});
 		
+		bookings.addClickHandler(new ClickHandler() {
+			
+			@Override
+			public void onClick(ClickEvent event) {
+				RootPanel.get("mainContent").clear();
+				RootPanel.get("mainContent").add(Bookings.getInstance());
+			}
+		});
+		
 		navPanel.add(overview);
 		navPanel.add(users);
 		navPanel.add(newRoom);

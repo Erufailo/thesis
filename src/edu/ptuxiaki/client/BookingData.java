@@ -1,6 +1,8 @@
 package edu.ptuxiaki.client;
 
-public class BookingData {
+import java.io.Serializable;
+
+public class BookingData implements Serializable{
 	
 	
 	private int bookingId;

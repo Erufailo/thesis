@@ -32,7 +32,7 @@ CREATE TABLE `users` (
   `password` char(60) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'jrin2113@gmail.com','John','RInakakis','6987412365','customer','$2a$10$E.rfsvs8qBAI82uFEmwqqu2GmgwUEQpiPnHrb8YOVfXm4pW84SQzm'),(2,'admin','megas','adminakis','6913371337','admin','$2a$10$VmR/BaVGffZT5EJYgfAK6.3TrmVt2W6HYLz8gFTvUYPJ8eWq/V/qC'),(3,'nikos','nikos','wutwtu','69594456','customer','$2a$10$we8jIvaQV2gSmDQOKAzSp.tzj0WAWYzVKRAb2rpBDGLlPrmbwO77y'),(5,'test','test','test','697test','customer','$2a$10$A1rD2Lhm5uRkn2durECrFeiOvP2ZfwxqRFEpl5eHcXDuehCyuomkq'),(11,'asd','asd','asd','asd','customer','$2a$10$k05U1mxkkLu9sJIEiJ.9oe9FI8WSySLd/2LojP1cMpHa9Zk8v.YMm');
+INSERT INTO `users` VALUES (1,'jrin2113@gmail.com','John','RInakakis','6987412365','customer','$2a$10$E.rfsvs8qBAI82uFEmwqqu2GmgwUEQpiPnHrb8YOVfXm4pW84SQzm'),(2,'admin','megas','adminakis','6913371337','admin','$2a$10$VmR/BaVGffZT5EJYgfAK6.3TrmVt2W6HYLz8gFTvUYPJ8eWq/V/qC'),(3,'nikos','nikos','wutwtu','69594456','customer','$2a$10$we8jIvaQV2gSmDQOKAzSp.tzj0WAWYzVKRAb2rpBDGLlPrmbwO77y'),(4,'test1','test1','testakis','test1','customer','$2a$10$DwFVrXrk7kG8WXzYZLchQ.3U7OV2cW3/VNLlwfBto6oZF9WbPEbC2');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-10-11 20:21:03
+-- Dump completed on 2016-10-24 19:26:32

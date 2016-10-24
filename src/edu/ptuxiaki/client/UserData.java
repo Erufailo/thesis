@@ -8,6 +8,9 @@ public class UserData implements Serializable{
 	 * Class that holds the Data of the user
 	 */
 	private static final long serialVersionUID = 1L;
+	private int id;
+	
+
 	private String name; 
 	private String surname;
 	private String email;
@@ -21,6 +24,7 @@ public class UserData implements Serializable{
 	
 	
 	public UserData() {
+		this.id=0;
 		this.name = null;
 		this.surname = null;
 		this.email = null;
@@ -38,8 +42,19 @@ public class UserData implements Serializable{
 	}
 	
 	
+	
 	public UserData(String name,String surname, String email,String tel,String role) {
 		super();
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.tel = tel;
+		this.role= role;
+	}
+	
+	public UserData(int id,String name,String surname, String email,String tel,String role) {
+		super();
+		this.id= id;
 		this.name = name;
 		this.surname = surname;
 		this.email = email;
@@ -115,6 +130,12 @@ public class UserData implements Serializable{
 		this.sID = sID;
 	}
 	
-	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 	
 }
