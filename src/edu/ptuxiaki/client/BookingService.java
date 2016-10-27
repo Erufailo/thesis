@@ -23,6 +23,6 @@ public interface BookingService extends RemoteService {
 	
 	public int getRoomIdFromName(String roomName);
 	
-	
+	public boolean isOldDates(String day1, String day2);
 	
 }

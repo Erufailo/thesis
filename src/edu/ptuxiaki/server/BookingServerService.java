@@ -24,7 +24,7 @@ public class BookingServerService extends RemoteServiceServlet implements Bookin
 
 	@Override
 	public String checkDates(String day1, String day2) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
     	try {
 			Date date1 = sdf.parse(day1);
 			Date date2 = sdf.parse(day2);
@@ -34,7 +34,7 @@ public class BookingServerService extends RemoteServiceServlet implements Bookin
 			System.out.println(sdf.format(date1));
 			System.out.println(sdf.format(date2));
 			System.out.println(daysBetween);
-			return daysBetween+"days";
+			return daysBetween+"";
 			
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -43,6 +43,32 @@ public class BookingServerService extends RemoteServiceServlet implements Bookin
     	
 		
 		return null;
+	}
+	
+	@Override
+	public boolean isOldDates(String day1, String day2) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+    	try {
+			Date date1 = sdf.parse(day1);
+			Date date2 = sdf.parse(day2);
+			
+			
+			int daysBetween1 = CalendarUtil.getDaysBetween(new Date(),date1);
+			int daysBetween2 = CalendarUtil.getDaysBetween(new Date(),date2);
+			if(daysBetween1<=0 ||daysBetween2 <=0){
+				return true;
+			}
+			else{
+				return false;
+			}
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+		
+		return false;
 	}
 
 	@Override

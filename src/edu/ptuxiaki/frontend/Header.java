@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.History;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -133,6 +134,8 @@ public class Header extends Composite {
 
 			Button home = new Button("Home");
 			Button booking = new Button("Booking");
+			Button roomGallery = new Button("Room Gallery");
+			Button contact = new Button("Contact");
 			Button logout = new Button("Logout");
 
 			home.addClickHandler(new ClickHandler() {
@@ -150,7 +153,24 @@ public class Header extends Composite {
 
 				}
 			});
+			
+			booking.addClickHandler(new ClickHandler() {
 
+				@Override
+				public void onClick(ClickEvent event) {
+					History.newItem("booking");
+
+				}
+			});
+			roomGallery.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					History.newItem("gallery");
+
+				}
+			});
+			
 			logout.addClickHandler(new ClickHandler() {
 
 				@Override
@@ -162,6 +182,7 @@ public class Header extends Composite {
 							GuiRole gui = new GuiRole();
 							gui.setRole("guest");
 							History.newItem("home");
+							Window.Location.reload();
 							
 						}
 						
@@ -179,11 +200,13 @@ public class Header extends Composite {
 
 			navPanel.add(home);
 			navPanel.add(booking);
+			navPanel.add(roomGallery);
+			navPanel.add(contact);
 			navPanel.add(logout);
 			fp.add(navPanel);
 			fp.addStyleName("header");
 
-		} else if (role.equals("admin")) {
+		} else if (role.equals("admin")||role.equals("personel")) {
 			// RootPanel.get("header").clear();
 
 			Button home = new Button("Home");

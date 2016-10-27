@@ -22,6 +22,8 @@ public interface BookingServiceAsync {
 
 	void getRoomIdFromName(String roomName, AsyncCallback<Integer> callback);
 
+	void isOldDates(String day1, String day2, AsyncCallback<Boolean> callback);
+
 
 
 }

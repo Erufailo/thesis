@@ -5,6 +5,7 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.RootPanel;
 
+
 import edu.ptuxiaki.backend.AdminHeader;
 import edu.ptuxiaki.backend.AdminPanel;
 import edu.ptuxiaki.frontend.Booking;
@@ -13,6 +14,7 @@ import edu.ptuxiaki.frontend.Home;
 import edu.ptuxiaki.frontend.Login;
 import edu.ptuxiaki.frontend.Register;
 import edu.ptuxiaki.frontend.RoomGallery;
+import edu.ptuxiaki.frontend.Success;
 
 
 /**
@@ -50,6 +52,10 @@ public class MyHistoryListener implements ValueChangeHandler<String> {
 		if (event.getValue().equals("contact")) {
 			RootPanel.get("mainContent").clear();
 			RootPanel.get("mainContent").add(Contact.getInstance());
+		}
+		if (event.getValue().equals("success")) {
+			RootPanel.get("mainContent").clear();
+			RootPanel.get("mainContent").add(Success.getInstance());
 		}
 		if (event.getValue().equals("admin")) {
 			RootPanel.get("mainContent").clear();

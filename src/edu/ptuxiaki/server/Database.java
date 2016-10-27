@@ -681,7 +681,7 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 			conn = getMySQLConnection();
 			stmt = (Statement) conn.createStatement();
 			// set the query and execute it
-			String query = "select room_id from bookings  WHERE STR_TO_DATE('"+date1+"', '%d-%m-%Y') >= date(start_date)"
+			String query = "select room_id from bookings  WHERE STR_TO_DATE('"+date1+"', '%d-%m-%Y') >= date(start_date) "
 														+"AND STR_TO_DATE('"+date2+"', '%d-%m-%Y')<=date(end_date)";
 			result = stmt.executeQuery(query);
 
@@ -790,8 +790,8 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 			pstmt = (PreparedStatement) conn.prepareStatement(query);
 			pstmt.setString(1, startDate);
 			pstmt.setString(2, endDate);
-			pstmt.setInt(3, roomId);//bug
-			pstmt.setInt(4, userId);
+			pstmt.setInt(3, userId);//bug
+			pstmt.setInt(4, roomId);
 			pstmt.setInt(5, 0);
 			pstmt.setString(6, totalPrice);
 			pstmt.executeUpdate();
