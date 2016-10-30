@@ -873,37 +873,6 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 				bookings.add(data);
 			}
 			
-//			result.close();
-//			stmt.close();
-//			result=null;
-//			stmt=null;
-//			stmt = (Statement) conn.createStatement();
-//			String query2 = "SELECT room_name FROM rooms WHERE room_id = "+roomId+"";
-//			result = stmt.executeQuery(query2);
-//			
-//			while (result.next()) {
-//				
-//				roomName = result.getString(1);
-//			}		
-//			result.close();
-//			stmt.close();
-//			result=null;
-//			stmt=null;
-//			
-//			stmt = (Statement) conn.createStatement();
-//			String query3 = "SELECT * FROM users WHERE user_id = "+userId+"";
-//			result = stmt.executeQuery(query3);
-//			
-//			while (result.next()) {
-//				
-//				firstName = result.getString(3);
-//				lastName = result.getString(4);
-//			}		
-			
-			
-			
-			
-			
 			// catch the exception if any
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -923,7 +892,79 @@ public RoomData getRoom(String roomName) throws ClassNotFoundException, SQLExcep
 
 	}
 	
-	
+public ArrayList<BookingData> getBooking(int userId) throws ClassNotFoundException, SQLException{
+		
+		
+		
+		ArrayList<BookingData> bookings = new  ArrayList<>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet result = null;
+		String query="";
+		
+		
+		
+
+		// initialize the variables to contain the results
+		
+	    int bookingId=0;
+		String roomName=null;
+		String startDate=null;
+		String endDate=null;
+		String firstName=null;
+		String lastName=null;
+		int bookingStatus=0;
+		String price=null;
+
+		try {
+			// initialize the SQL connection
+			conn = getMySQLConnection();
+			stmt = (Statement) conn.createStatement();
+			// set the query and execute it
+			
+				query = "select * FROM bookings inner join rooms on bookings.room_id = rooms.room_id"
+												+" inner join users on bookings.user_id = users.user_id"
+												+" WHERE users.user_id="+userId+"";
+			
+			
+			
+			result = stmt.executeQuery(query);
+		
+			// get the results and put them in the variables
+			while (result.next()) {
+				SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yy");
+				bookingId=result.getInt(1);
+				startDate =formatter.format(result.getDate(2));
+				endDate =formatter.format(result.getDate(3));
+				bookingStatus= result.getInt(6);
+				price= result.getString(7);
+				roomName = result.getString(9);
+				firstName = result.getString(16);
+				lastName = result.getString(17);
+				
+				
+				BookingData data = new BookingData(bookingId, roomName, startDate, endDate, firstName, lastName, bookingStatus, price);
+				bookings.add(data);
+			}
+			
+			// catch the exception if any
+		} catch (SQLException e) {
+			e.printStackTrace();
+			// close all the open connections
+		} finally {
+			if (result != null) {
+				result.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return bookings;
+
+	}
 	
 	
 	

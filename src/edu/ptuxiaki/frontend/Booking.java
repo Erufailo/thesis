@@ -108,7 +108,7 @@ public class Booking extends Composite {
 					
 				}
 			});
-		      final Label roomCheckLabel= new Label("Check Available Rooms");
+		      final Label roomCheckLabel= new Label("Available Rooms");
 		      Button checkRooms = new Button("Search");
 		      
 		      
@@ -279,8 +279,8 @@ public class Booking extends Composite {
 			
 			
 
-			
-
+		      horizontalPanel.addStyleName("center");
+		      vPanel.addStyleName("center");	
 			
 
 			

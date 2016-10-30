@@ -12,6 +12,7 @@ import edu.ptuxiaki.frontend.Booking;
 import edu.ptuxiaki.frontend.Contact;
 import edu.ptuxiaki.frontend.Home;
 import edu.ptuxiaki.frontend.Login;
+import edu.ptuxiaki.frontend.Profile;
 import edu.ptuxiaki.frontend.Register;
 import edu.ptuxiaki.frontend.RoomGallery;
 import edu.ptuxiaki.frontend.Success;
@@ -57,10 +58,17 @@ public class MyHistoryListener implements ValueChangeHandler<String> {
 			RootPanel.get("mainContent").clear();
 			RootPanel.get("mainContent").add(Success.getInstance());
 		}
+		if (event.getValue().equals("profile")) {
+			RootPanel.get("mainContent").clear();
+			RootPanel.get("mainContent").add(Profile.getInstance());
+		}
 		if (event.getValue().equals("admin")) {
 			RootPanel.get("mainContent").clear();
 			RootPanel.get("header").clear();
+			RootPanel.get("footer").clear();
 			RootPanel.get().clear();
+			RootPanel.get("body").clear();
+			RootPanel.get().addStyleName("adminBody");
 			RootPanel.get("header").add(AdminHeader.getInstance());
 			RootPanel.get("mainContent").add(AdminPanel.getInstance());
 			RootPanel.get("headerText").clear();

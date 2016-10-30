@@ -24,6 +24,8 @@ public interface BookingServiceAsync {
 
 	void isOldDates(String day1, String day2, AsyncCallback<Boolean> callback);
 
+	void getBooking(int userId, AsyncCallback<ArrayList<BookingData>> callback);
+
 
 
 }

@@ -191,6 +191,7 @@ public class Rooms  extends Composite {
 		panel.setBorderWidth(1);
 		panel.setWidth("500");
 		panel.add(table);
+		panel.addStyleName("center");
 		panel.add(bottomPanel);
 		fp.add(panel);
 		// fp.add(label);

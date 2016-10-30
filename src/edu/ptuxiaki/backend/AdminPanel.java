@@ -101,9 +101,11 @@ public class AdminPanel extends Composite {
 		panel.add(label);
 		panel.add(table);
 		panel.add(bottomPanel);
+		
+		panel.addStyleName("center");
 		fp.add(panel);
 		// fp.add(label);
-
+		
 		fp.addStyleName("adminMainContent");
 	}
 	

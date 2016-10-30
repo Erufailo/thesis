@@ -1,13 +1,16 @@
 /** Add css rules here for your application. */
 .body{
-	background-color:#b3e0ff;
+	background-color:#d3d7cf;
+	background-image: url("http://127.0.0.1:8888/hotelImages/bodyImage.jpg");
+}
+.adminBody{
+	background-color:#d3d7cf;
+	
 }
 .adminHeader{
 	margin-top:20px;
-	margin-left: 20px;
-	margin-right: auto;
 	width: 50%;
-	background-color: #000 ;
+	background-color: #3e87ff ;
 }
 .adminMainContent{
 	height:500px;
@@ -15,32 +18,62 @@
 	margin-right: auto;
 	width: 80%;
 	text-align:center;
-	background-color: #909090 ;
+	background-color: #FFF ;
    font-family: verdana, sans-serif;
 
 }
 
 .header{
+
+	height:70px;
+	width: 100%;
+	background-color: #204a87; 
+	text-align:center;
+	opacity: 0.9;
 	
+	
+}
+
+.headerButtons{
 	margin-left: auto;
 	margin-right: auto;
-	width: 30%;
-	background-color: #8ba5c8 
-	
+	text-align:center;
+	opacity:1;
+  
+}
+
+.labelCenter{
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	text-align:center;
+}
+.center{
+	margin-left: auto;
+	margin-right: auto;
+	text-align:center;
 }
 .mainContent{
 	height:500px;
 	margin-left: auto;
 	margin-right: auto;
-	width: 35%;
+	margin-top:130px;
+	width: 50%;
 	text-align:center;
-	background-color: #8ba5c8 
+	background-color: #FFF;
+	opacity: 0.9;
 }
 .footer{
 	margin-left: auto;
 	margin-right: auto;
-	width: 80%;
-	background-color: #8ba5c8 
+	margin-bottom:2px;
+	margin-top:9%;
+	width: 100%;
+	height:30px;
+	text-align:center;
+	background-color: #204a87 ;
+	color: #ffffff;   
 }	
 .myGrid{
 	text-align: center;
@@ -48,12 +81,25 @@
 	margin-right: auto;
 }	
 
+.labelHeader{
+	font-size: 2em;
+    font-weight: bold;
+	color: #ffffff;   
+   /*margin: 40px 30px 70px 100px;*/
+}
+.buttonCenter{
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;	
+}	
+
 /** Example rules used by the template application (remove for your app) */
 h1 {
   font-size: 2em;
   font-weight: bold;
   color: #777777;
-  margin: 40px 0px 70px;
+  /*margin: 40px 0px 70px;*/
   text-align: center;
 }
 

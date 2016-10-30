@@ -154,6 +154,18 @@ public class BookingServerService extends RemoteServiceServlet implements Bookin
 		return roomId;
 	}
 
+	@Override
+	public ArrayList<BookingData> getBooking(int userId) {
+		ArrayList<BookingData> bookings = null;
+		try {
+			bookings= db.getBooking(userId);
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return bookings;
+	}
+
 	
 	
 

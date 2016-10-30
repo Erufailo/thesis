@@ -25,4 +25,6 @@ public interface BookingService extends RemoteService {
 	
 	public boolean isOldDates(String day1, String day2);
 	
+	public ArrayList<BookingData> getBooking(int userId);
+	
 }

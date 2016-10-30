@@ -155,7 +155,9 @@ public class Bookings extends Composite {
 		panel.setBorderWidth(1);
 		panel.setWidth("500");
 		panel.add(table);
+		
 		panel.add(bottomPanel);
+		panel.addStyleName("center");
 		fp.add(panel);
 		// fp.add(label);
 

@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 import edu.ptuxiaki.client.GuiRole;
@@ -23,6 +24,8 @@ public class Header extends Composite {
 	static private Header _instance = null;
 	FlowPanel fp = new FlowPanel();
 	HorizontalPanel navPanel = new HorizontalPanel();
+	//FlowPanel navPanel = new FlowPanel();
+	Label welcomeMsg = new Label("Welcome to IE Hotel");
 
 	public Header(String role) {
 		initPage(role);
@@ -71,7 +74,12 @@ public class Header extends Composite {
 
 	// show header for each role
 	public void initPage(String role) {
-
+		
+		welcomeMsg.addStyleName("labelHeader");
+		navPanel.add(welcomeMsg);
+		navPanel.addStyleName("headerButtons");
+		
+		navPanel.setSpacing(15);
 		if (role.equals("guest")) {
 			// RootPanel.get("header").clear();
 
@@ -121,12 +129,19 @@ public class Header extends Composite {
 
 				}
 			});
-
+			
+			
+		
 			navPanel.add(home);
 			navPanel.add(login);
 			navPanel.add(booking);
 			navPanel.add(roomGallery);
 			navPanel.add(contact);
+			
+			
+			
+			
+			
 			fp.add(navPanel);
 			fp.addStyleName("header");
 		} else if (role.equals("customer")) {
@@ -136,7 +151,9 @@ public class Header extends Composite {
 			Button booking = new Button("Booking");
 			Button roomGallery = new Button("Room Gallery");
 			Button contact = new Button("Contact");
+			Button profile = new Button("Profile");
 			Button logout = new Button("Logout");
+			
 
 			home.addClickHandler(new ClickHandler() {
 
@@ -171,6 +188,24 @@ public class Header extends Composite {
 				}
 			});
 			
+			contact.addClickHandler(new ClickHandler() {
+
+				@Override
+				public void onClick(ClickEvent event) {
+					History.newItem("contact");
+
+				}
+			});
+			
+			profile.addClickHandler(new ClickHandler() {
+				
+				@Override
+				public void onClick(ClickEvent event) {
+					History.newItem("profile");
+					
+				}
+			});
+			
 			logout.addClickHandler(new ClickHandler() {
 
 				@Override
@@ -202,7 +237,9 @@ public class Header extends Composite {
 			navPanel.add(booking);
 			navPanel.add(roomGallery);
 			navPanel.add(contact);
+			navPanel.add(profile);
 			navPanel.add(logout);
+			
 			fp.add(navPanel);
 			fp.addStyleName("header");
 

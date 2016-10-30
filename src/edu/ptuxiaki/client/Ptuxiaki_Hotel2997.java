@@ -26,7 +26,7 @@ public class Ptuxiaki_Hotel2997 implements EntryPoint {
 		
 		//add the style from css
 		RootPanel.get().addStyleName("body");
-		RootPanel.get("headerText").add(new Label("Welcome"));
+		//RootPanel.get("headerText").add(new Label("Welcome to IE Hotel"));
 		userRoles.setRole(roleCheck.getRole());
 		//check if session is alive(if exists at all)
 		
