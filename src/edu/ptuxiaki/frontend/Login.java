@@ -12,6 +12,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Grid;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.TextBox;
@@ -33,7 +34,7 @@ public class Login extends Composite {
 	private FlowPanel fp = new FlowPanel();
 	private Grid grid = new Grid(3, 2);
 
-	private Label label;
+	private HTML label;
 
 	private Label emailLbl;
 	private TextBox emailTxb;
@@ -65,7 +66,7 @@ public class Login extends Composite {
 	}
 
 	public void initPage() {
-		label = new Label("Please insert your information below:");
+		label = new HTML("<h2>Please insert your information below</h2>");
 
 		emailLbl = new Label("Email : ");
 		emailTxb = new TextBox();
@@ -126,7 +127,7 @@ public class Login extends Composite {
 		grid.setWidget(2, 1, register);
 
 		grid.addStyleName("myGrid");
-
+		//label.addStyleName("");
 		fp.add(label);
 		fp.add(grid);
 		fp.addStyleName("mainContent");

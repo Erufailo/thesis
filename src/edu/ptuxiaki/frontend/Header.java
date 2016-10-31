@@ -84,8 +84,7 @@ public class Header extends Composite {
 			// RootPanel.get("header").clear();
 
 			Button home = new Button("Home");
-			Button login = new Button("Login");
-			Button booking = new Button("Booking");
+			Button login = new Button("Login / Register");
 			Button roomGallery = new Button("Room Gallery");
 			Button contact = new Button("Contact");
 
@@ -105,14 +104,7 @@ public class Header extends Composite {
 
 				}
 			});
-			booking.addClickHandler(new ClickHandler() {
-
-				@Override
-				public void onClick(ClickEvent event) {
-					History.newItem("booking");
-
-				}
-			});
+			
 			roomGallery.addClickHandler(new ClickHandler() {
 
 				@Override
@@ -134,7 +126,6 @@ public class Header extends Composite {
 		
 			navPanel.add(home);
 			navPanel.add(login);
-			navPanel.add(booking);
 			navPanel.add(roomGallery);
 			navPanel.add(contact);
 			
@@ -243,7 +234,7 @@ public class Header extends Composite {
 			fp.add(navPanel);
 			fp.addStyleName("header");
 
-		} else if (role.equals("admin")||role.equals("personel")) {
+		} else if (role.equals("admin")||role.equals("personnel")) {
 			// RootPanel.get("header").clear();
 
 			Button home = new Button("Home");

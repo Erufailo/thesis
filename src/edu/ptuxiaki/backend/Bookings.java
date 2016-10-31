@@ -58,6 +58,7 @@ public class Bookings extends Composite {
 
 	public void initPage() {
 		final CellTable<BookingData> table = createTable();
+		HTML label = new HTML("<h1>Bookings</h1>");
 		
 		Button checkIn = new Button("Check-in");
 		Button checkOut= new Button("Check-out");
@@ -154,7 +155,9 @@ public class Bookings extends Composite {
 
 		panel.setBorderWidth(1);
 		panel.setWidth("500");
+		panel.add(label);
 		panel.add(table);
+		
 		
 		panel.add(bottomPanel);
 		panel.addStyleName("center");

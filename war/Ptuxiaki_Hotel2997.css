@@ -8,9 +8,10 @@
 	
 }
 .adminHeader{
-	margin-top:20px;
-	width: 50%;
-	background-color: #3e87ff ;
+	
+	width: 100%;
+	background-color: #204a87 ;
+	height:70px;
 }
 .adminMainContent{
 	height:500px;
@@ -19,6 +20,8 @@
 	width: 80%;
 	text-align:center;
 	background-color: #FFF ;
+	margin-top:130px;
+	
    font-family: verdana, sans-serif;
 
 }
@@ -79,6 +82,7 @@
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
+	margin-top:40px;
 }	
 
 .labelHeader{
@@ -93,6 +97,16 @@
 	margin-right: auto;
 	margin-top: 10px;	
 }	
+.contactPanel{
+	
+	margin-left: auto;
+	margin-right: auto;
+		
+}
+.contactLabel{
+	margin-bottom:30px;
+	font-size:110%;
+}
 
 /** Example rules used by the template application (remove for your app) */
 h1 {

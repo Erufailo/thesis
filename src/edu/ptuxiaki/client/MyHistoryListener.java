@@ -67,7 +67,7 @@ public class MyHistoryListener implements ValueChangeHandler<String> {
 			RootPanel.get("header").clear();
 			RootPanel.get("footer").clear();
 			RootPanel.get().clear();
-			RootPanel.get("body").clear();
+			RootPanel.get("body").removeStyleName("body");
 			RootPanel.get().addStyleName("adminBody");
 			RootPanel.get("header").add(AdminHeader.getInstance());
 			RootPanel.get("mainContent").add(AdminPanel.getInstance());

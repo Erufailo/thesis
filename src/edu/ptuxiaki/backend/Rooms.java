@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
+import edu.ptuxiaki.client.RoleCheck;
 import edu.ptuxiaki.client.RoomData;
 import edu.ptuxiaki.client.RoomService;
 import edu.ptuxiaki.client.RoomServiceAsync;
@@ -42,6 +43,8 @@ public class Rooms  extends Composite {
 	
 	VerticalPanel panel = new VerticalPanel();
 	HorizontalPanel bottomPanel = new HorizontalPanel();
+	RoleCheck role = new RoleCheck();
+	boolean isAllowed;
 	//ArrayList<UserData> USERS = new ArrayList<>();
 	
 	private String selection = null;
@@ -60,9 +63,14 @@ public class Rooms  extends Composite {
 	}
 
 	public void initPage() {
-
+		if(role.getRole().equals("admin")){
+			isAllowed = true;
+		}else{
+			isAllowed = false;
+		}
 
 		final CellTable<RoomData> table = createTable();
+		HTML label = new HTML("<h1>Hotel Rooms</h1>");
 		
 		Button add = new Button("Add User");
 		Button edit = new Button("Edit User");
@@ -163,6 +171,9 @@ public class Rooms  extends Composite {
 				
 				@Override
 				public void onClick(ClickEvent event) {
+					
+					if(isAllowed){
+					
 					roomService.deleteRoom(getSelection(), new AsyncCallback<Void>() {
 						
 						@Override
@@ -177,7 +188,9 @@ public class Rooms  extends Composite {
 							
 						}
 					});
-					
+					}else{
+						errorBox("Only admin is permmited for this action");
+					}
 				}
 			});
 		
@@ -190,7 +203,9 @@ public class Rooms  extends Composite {
 
 		panel.setBorderWidth(1);
 		panel.setWidth("500");
+		panel.add(label);
 		panel.add(table);
+		
 		panel.addStyleName("center");
 		panel.add(bottomPanel);
 		fp.add(panel);

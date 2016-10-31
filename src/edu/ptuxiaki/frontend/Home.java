@@ -7,7 +7,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
 import edu.ptuxiaki.client.GuiRole;
 import edu.ptuxiaki.client.UserService;
@@ -36,36 +39,24 @@ public class Home extends Composite {
 
 	public void initPage() {
 
-		Label label = new Label("Initialization of Project");
+		HTML label = new HTML("<h1>Informatics Engineering Hotel</h1></br>");
 		
-		Button testGui = new Button("Change Header");
-			
-		testGui.addClickHandler(new ClickHandler() {
-			
-			@Override
-			public void onClick(ClickEvent event) {
-				userService.changeRole(new AsyncCallback<String>() {
-					
-					@Override
-					public void onSuccess(String result) {
-						GuiRole role = new GuiRole();
-						role.setRole(result);
-						
-						
-					}
-					
-					@Override
-					public void onFailure(Throwable caught) {
-						// TODO Auto-generated method stub
-						
-					}
-				});
-				
-			}
-		});
+		HTML label2 = new HTML("<p>Welcome to Informatics Engineering Hotel, we wish you a pleasant stay<p></br>"
+				+ "To make a booking you must first login or register.");
 		
-		fp.add(label);
-		fp.add(testGui);
+		Image image = new Image("http://127.0.0.1:8888/hotelImages/homeimg.jpg");
+		image.setHeight("300px");
+		
+		
+		
+		VerticalPanel vPanel = new VerticalPanel();
+		
+		vPanel.add(label);
+		vPanel.add(label2);
+		vPanel.add(image);
+		vPanel.addStyleName("center");
+		fp.add(vPanel);
+		
 		fp.addStyleName("mainContent");
 	}
 }
