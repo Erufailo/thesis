@@ -72,12 +72,12 @@ public class Rooms  extends Composite {
 		final CellTable<RoomData> table = createTable();
 		HTML label = new HTML("<h1>Hotel Rooms</h1>");
 		
-		Button add = new Button("Add User");
-		Button edit = new Button("Edit User");
+		Button add = new Button("Add Room");
+		Button edit = new Button("Edit Room");
 		final TextBox findTextBox = new TextBox();
-		Button findButton = new Button("Find User");
+		Button findButton = new Button("Find Room");
 		Button updateButton = new Button("Update Table");
-		Button delete = new Button("Delete User");
+		Button delete = new Button("Delete Room");
 		
 		add.addClickHandler(new ClickHandler() {
 			
@@ -91,6 +91,7 @@ public class Rooms  extends Composite {
 			
 			@Override
 			public void onClick(ClickEvent event) {
+				if(getSelection()!=null){
 				roomService.getRoom(getSelection(), new AsyncCallback<RoomData>() {
 					
 					@Override
@@ -105,7 +106,9 @@ public class Rooms  extends Composite {
 						
 					}
 				});
-				
+				}else{
+					errorBox("Please select a user to edit!");
+				}
 			}
 		});
 		
@@ -135,7 +138,7 @@ public class Rooms  extends Composite {
 						}
 					});
 				} else {
-					errorBox("Please select user");
+					errorBox("Please select room");
 				}
 
 			}
@@ -173,6 +176,7 @@ public class Rooms  extends Composite {
 				public void onClick(ClickEvent event) {
 					
 					if(isAllowed){
+						if(getSelection()!=null){
 					
 					roomService.deleteRoom(getSelection(), new AsyncCallback<Void>() {
 						
@@ -188,6 +192,9 @@ public class Rooms  extends Composite {
 							
 						}
 					});
+						}else{
+							errorBox("Please select a user to delete!");
+						}
 					}else{
 						errorBox("Only admin is permmited for this action");
 					}
@@ -318,8 +325,8 @@ public class Rooms  extends Composite {
 		final DialogBox dlBox = new DialogBox();
 		final Label success = new Label();
 		HTML text;
-		dlBox.setTitle("Add User");
-		dlBox.setText("Add a new User");
+		dlBox.setTitle("Add Room");
+		dlBox.setText("Add a new Room");
 		VerticalPanel dialogVPanel = new VerticalPanel();
 		HorizontalPanel hPanel = new HorizontalPanel();
 		// Make a new list box, adding a few items to it.

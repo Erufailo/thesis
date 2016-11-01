@@ -85,9 +85,8 @@ public class Login extends Composite {
 					@Override
 					public void onSuccess(UserData result) {
 						fp.remove(grid);
-						fp.add(new Label(result.getEmail()));
-						fp.add(new Label(result.getToken()));
-						fp.add(new Label(result.getsID()));
+						fp.add(new Label("Welcome Back "+result.getEmail()));
+						
 						// create cookie based on the session with server
 						String sessionID = result.getsID();
 						String token = result.getToken();
@@ -97,7 +96,7 @@ public class Login extends Composite {
 						Cookies.setCookie("token", token, expires, null, "/", false);
 						Cookies.setCookie("userId", result.getId()+"", expires, null, "/", false);
 						userRoles.setRole(result.getRole());
-
+						History.newItem("home");
 					}
 
 					@Override
