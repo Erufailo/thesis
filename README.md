@@ -8,6 +8,6 @@ The technology used is JAVA, JSP, and the GWT (Google Web Toolkit) framework to 
 functional part of the application. MYSQL was used for the management of the database. Also for the implementation of this application were used various softwares which are available free on the internet which is the
 Eclipse Mars (IDE) and the MYSQL Workbench.
 
-#Images 
+# Images 
 
-![alt text](https://drive.google.com/open?id=0Bxa1DDZRpxEcV01XMFhoNFpCMGc)
+https://drive.google.com/open?id=12KNl0Ev52HyOmmr4jSelcBCIKfslriI5
